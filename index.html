@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <title>Will You Be My Valentine?</title>
 
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Pacifico', cursive;
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
       display: flex;
       align-items: center;
@@ -20,9 +21,9 @@
 
     .card {
       background: rgba(255, 255, 255, 0.15);
-      padding: 25px;
+      padding: 30px;
       border-radius: 20px;
-      max-width: 350px;
+      max-width: 420px;
       width: 90%;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       backdrop-filter: blur(10px);
@@ -54,10 +55,8 @@
     }
 
     .no {
-      background-color: white;
-      color: #ff4d6d;
-    }
-
+  transition: top 0.3s, left 0.3s;
+}
     button:hover {
       transform: scale(1.1);
     }
@@ -78,31 +77,48 @@
 <body>
   <div class="card">
     <div class="heart">❤️</div>
-    <h1>Hey Love 🥰</h1>
+    <h1>Oh my mannuuuu🥰</h1>
     <p>
-      Every moment with you means the world to me.  
-      So I wanted to ask you something special…
-    </p>
+  You are my world, You are my whole existence.<br><br>
+  You complete me baby.<br><br>
+  Every second, every minute I get to spend with you is all I wish for!<br><br>
+  You do know that right??<br><br>
+  Every moment with you means the world to me.<br><br>
+  So I wanted to ask you something special…
+</p>
+
     <h2>Will you be my Valentine? 💌</h2>
 
     <button class="yes" onclick="yesClicked()">YES 💖</button>
-    <button class="no" onclick="noClicked()">NO 🙈</button>
+    <button class="no" id="noBtn">NO 🙈</button>
   </div>
 
-  <script>
-    function yesClicked() {
-      document.body.innerHTML = `
-        <div style="text-align:center;color:white;">
-          <h1>YAYYY!!! 💕🥹</h1>
-          <p>You just made me the happiest person ever 💖</p>
-          <p>Happy Valentine’s Day, my love ❤️</p>
-        </div>
-      `;
-    }
+ <script>
+  function yesClicked() {
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        color:white;
+      ">
+        <h1>YAYYY!!! 💕🥹</h1>
+        <p>You just made me the happiest person ever 💖</p>
+        <p>Happy Valentine’s Day, Mannuu ❤️</p>
+      </div>
+    `;
+  }
 
-    function noClicked() {
-      alert("No is not an option 😤💔 Try again!");
-    }
-  </script>
+  const noBtn = document.getElementById("noBtn");
+  noBtn.addEventListener("mouseover", () => {
+    noBtn.style.position = "absolute";
+    noBtn.style.top = Math.random() * 80 + "%";
+    noBtn.style.left = Math.random() * 80 + "%";
+  });
+</script>
 </body>
 </html>
+
