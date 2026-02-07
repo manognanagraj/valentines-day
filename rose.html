@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rose Day 🌹</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Pacifico', cursive;
+      background: linear-gradient(135deg, #ff6f91, #ffc1cc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s;
+    }
+
+    .yes {
+      background-color: #ff2e63;
+      color: white;
+    }
+
+    .no {
+      background-color: white;
+      color: #ff2e63;
+      position: absolute;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .poem {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .bouquet {
+      font-size: 4rem;
+      animation: float 2s infinite alternate;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" id="startCard">
+    <h1>Are you ready for today’s surprise? 🌹</h1>
+    <button class="yes" onclick="showSurprise()">YES 💖</button>
+    <button class="no" id="noBtn">NO 🙈</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("mouseover", () => {
+      noBtn.style.top = Math.random() * 80 + "vh";
+      noBtn.style.left = Math.random() * 80 + "vw";
+    });
+
+    function showSurprise() {
+      document.body.innerHTML = `
+        <div class="card">
+          <h1>Happy Rose Day 🌹</h1>
+
+          <div class="poem">
+            Roses are red,<br>
+            violets are blue,<br>
+            if I had a whole garden,<br>
+            I’d still search for you.<br><br>
+
+            Among every flower,<br>
+            no matter the place,<br>
+            you’d be the one<br>
+            I’d choose to embrace 💖
+          </div>
+
+          <div class="bouquet">💐🌹🌷🌹💐</div>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
