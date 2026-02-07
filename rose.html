@@ -5,39 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rose Day 🌹</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
       height: 100vh;
-      font-family: 'Pacifico', cursive;
       background: linear-gradient(135deg, #ff6f91, #ffc1cc);
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      font-family: 'Pacifico', cursive;
       color: white;
       overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating petals */
+    .petal {
+      position: absolute;
+      top: -50px;
+      font-size: 1.5rem;
+      opacity: 0.6;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 420px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 32px;
+      border-radius: 22px;
+      max-width: 440px;
       width: 90%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       backdrop-filter: blur(10px);
+      z-index: 2;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 2.1rem;
       margin-bottom: 20px;
     }
 
     button {
-      padding: 12px 24px;
+      padding: 12px 26px;
       border: none;
       border-radius: 30px;
       font-size: 1rem;
@@ -62,25 +80,27 @@
     }
 
     .poem {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      line-height: 1.8;
+      margin: 22px 0;
     }
 
     .bouquet {
-      font-size: 4rem;
-      animation: float 2s infinite alternate;
+      margin-top: 20px;
     }
 
-    @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(-10px); }
+    .bouquet img {
+      width: 85%;
+      max-width: 300px;
     }
   </style>
 </head>
 
 <body>
 
+  <!-- Start Card -->
   <div class="card" id="startCard">
     <h1>Are you ready for today’s surprise? 🌹</h1>
     <button class="yes" onclick="showSurprise()">YES 💖</button>
@@ -88,13 +108,14 @@
   </div>
 
   <script>
+    /* NO button runs away */
     const noBtn = document.getElementById("noBtn");
-
     noBtn.addEventListener("mouseover", () => {
       noBtn.style.top = Math.random() * 80 + "vh";
       noBtn.style.left = Math.random() * 80 + "vw";
     });
 
+    /* Show poem */
     function showSurprise() {
       document.body.innerHTML = `
         <div class="card">
@@ -107,15 +128,34 @@
             I’d still search for you.<br><br>
 
             Among every flower,<br>
-            no matter the place,<br>
-            you’d be the one<br>
-            I’d choose to embrace 💖
+            pretty and rare,<br>
+            my eyes would stop<br>
+            only when you’re there.<br><br>
+
+            If love were a garden,<br>
+            and choices were few,<br>
+            I’d pick you again —<br>
+            every time, every view 💖
           </div>
 
-          <div class="bouquet">💐🌹🌷🌹💐</div>
+          <div class="bouquet">
+            <img src="bouquet.png" alt="Rose Bouquet">
+          </div>
         </div>
       `;
     }
+
+    /* Floating rose petals */
+    setInterval(() => {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      petal.innerText = "🌸";
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = Math.random() * 5 + 6 + "s";
+      document.body.appendChild(petal);
+
+      setTimeout(() => petal.remove(), 12000);
+    }, 800);
   </script>
 
 </body>
