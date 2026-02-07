@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propose Day 💍</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #fbc2eb, #a18cd1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Pacifico', cursive;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      top: -10%;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(120vh) rotate(360deg);
+      }
+    }
+
+    .card {
+      background: rgba(255,255,255,0.2);
+      padding: 30px 24px;
+      border-radius: 24px;
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.8;
+      margin: 20px 0;
+    }
+
+    img {
+      width: 180px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .love-note {
+      text-align: right;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    button {
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1rem;
+      margin: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .yes {
+      background-color: #ff4f81;
+      color: white;
+    }
+
+    .no {
+      background-color: white;
+      color: #ff4f81;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- First screen -->
+  <div class="card" id="start">
+    <h1>I have something important to ask you… 💗</h1>
+    <button class="yes" onclick="showProposal()">YES 💖</button>
+    <button class="no" id="noBtn">NO 🙈</button>
+  </div>
+
+  <script>
+    /* NO button runs away */
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", () => {
+      noBtn.style.top = Math.random() * 80 + "vh";
+      noBtn.style.left = Math.random() * 80 + "vw";
+    });
+
+    /* Show proposal */
+    function showProposal() {
+      document.body.innerHTML = `
+        <div class="card">
+          <h1>Will you be mine… forever? 💍</h1>
+
+          <div class="message">
+            I don’t need perfect days,<br>
+            or fairy-tale nights.<br>
+            I just need <em>you</em>,<br>
+            by my side, in every version of life.<br><br>
+
+            Through laughter and silence,<br>
+            through ups and downs,<br>
+            I choose you — today,<br>
+            tomorrow, always.
+          </div>
+
+          <img src="ring.jpeg" alt="Ring Illustration">
+
+          <div class="love-note">
+            Always yours ❤️
+          </div>
+        </div>
+      `;
+    }
+
+    /* Floating hearts */
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 1.4 + 0.8 + "rem";
+      heart.style.animationDuration = Math.random() * 5 + 6 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 12000);
+    }, 400);
+  </script>
+
+</body>
+</html>
