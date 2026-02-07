@@ -22,27 +22,29 @@
       position: relative;
     }
 
-    /* Floating petals */
+    /* Floating rose petals */
     .petal {
       position: absolute;
-      top: -50px;
-      font-size: 1.5rem;
+      top: -10%;
       opacity: 0.6;
       animation: fall linear infinite;
+      z-index: 1;
     }
 
     @keyframes fall {
       to {
-        transform: translateY(110vh) rotate(360deg);
+        transform: translateY(120vh) rotate(360deg);
       }
     }
 
     .card {
       background: rgba(255, 255, 255, 0.18);
-      padding: 32px;
+      padding: 28px 22px 20px;
       border-radius: 22px;
       max-width: 440px;
       width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       backdrop-filter: blur(10px);
@@ -50,8 +52,32 @@
     }
 
     h1 {
-      font-size: 2.1rem;
-      margin-bottom: 20px;
+      font-size: 2.2rem;
+      margin: 10px 0 20px;
+    }
+
+    .poem {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      line-height: 1.8;
+      margin: 20px 0;
+    }
+
+    .bouquet img {
+      width: 85%;
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .love-note {
+      text-align: right;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      opacity: 0.9;
     }
 
     button {
@@ -64,6 +90,10 @@
       transition: transform 0.2s;
     }
 
+    button:hover {
+      transform: scale(1.1);
+    }
+
     .yes {
       background-color: #ff2e63;
       color: white;
@@ -74,33 +104,12 @@
       color: #ff2e63;
       position: absolute;
     }
-
-    button:hover {
-      transform: scale(1.1);
-    }
-
-    .poem {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.35rem;
-      line-height: 1.8;
-      margin: 22px 0;
-    }
-
-    .bouquet {
-      margin-top: 20px;
-    }
-
-    .bouquet img {
-      width: 85%;
-      max-width: 300px;
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- Start Card -->
+  <!-- First screen -->
   <div class="card" id="startCard">
     <h1>Are you ready for today’s surprise? 🌹</h1>
     <button class="yes" onclick="showSurprise()">YES 💖</button>
@@ -115,7 +124,7 @@
       noBtn.style.left = Math.random() * 80 + "vw";
     });
 
-    /* Show poem */
+    /* Show Rose Day content */
     function showSurprise() {
       document.body.innerHTML = `
         <div class="card">
@@ -141,21 +150,26 @@
           <div class="bouquet">
             <img src="bouquet.png" alt="Rose Bouquet">
           </div>
+
+          <div class="love-note">
+            with love ❤️
+          </div>
         </div>
       `;
     }
 
-    /* Floating rose petals */
+    /* Continuous floating rose petals */
     setInterval(() => {
       const petal = document.createElement("div");
       petal.classList.add("petal");
-      petal.innerText = "🌸";
+      petal.innerText = "🌹";
       petal.style.left = Math.random() * 100 + "vw";
+      petal.style.fontSize = Math.random() * 1.4 + 0.8 + "rem";
       petal.style.animationDuration = Math.random() * 5 + 6 + "s";
       document.body.appendChild(petal);
 
       setTimeout(() => petal.remove(), 12000);
-    }, 800);
+    }, 350);
   </script>
 
 </body>
