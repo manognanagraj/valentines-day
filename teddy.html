@@ -6,30 +6,29 @@
   <title>Teddy Day 🧸</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Comic+Neue:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Comic+Neue:ital@1&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #f7c8b6, #fce1d8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f7c59f, #fce1c7);
       font-family: 'Pacifico', cursive;
-      color: #5a3e36;
-      overflow: hidden;
+      color: #6b3e26;
+      overflow-x: hidden;
       position: relative;
+      padding: 30px 0;
     }
 
     /* Floating icons */
     .float {
-      position: absolute;
+      position: fixed;
       top: -10%;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       opacity: 0.7;
       animation: fall linear infinite;
-      z-index: 1;
+      z-index: 0;
+      pointer-events: none;
     }
 
     @keyframes fall {
@@ -39,77 +38,78 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.7);
       padding: 28px 22px;
-      border-radius: 25px;
-      max-width: 440px;
+      border-radius: 24px;
+      max-width: 460px;
       width: 90%;
+      margin: auto;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
-      z-index: 2;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
+      z-index: 1;
+      position: relative;
     }
 
     h1 {
-      font-size: 2.1rem;
-      margin-bottom: 15px;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
     }
 
     .poem {
       font-family: 'Comic Neue', cursive;
-      font-size: 1.3rem;
-      line-height: 1.7;
-      margin: 20px 0;
+      font-style: italic;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      margin: 25px 0;
+    }
+
+    .teddy-img img {
+      width: 85%;
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+      border-radius: 18px;
+    }
+
+    .love-note {
+      text-align: right;
+      font-family: 'Comic Neue', cursive;
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-top: 15px;
     }
 
     button {
-      padding: 12px 24px;
-      font-size: 1rem;
+      padding: 12px 22px;
+      font-size: 1.1rem;
       border: none;
       border-radius: 30px;
       cursor: pointer;
       margin: 10px;
-      transition: transform 0.2s;
-      font-family: 'Pacifico', cursive;
-    }
-
-    .yes {
-      background-color: #c97c5d;
+      background: #a47148;
       color: white;
-    }
-
-    .no {
-      background-color: white;
-      color: #c97c5d;
-      position: relative;
+      transition: transform 0.2s;
     }
 
     button:hover {
       transform: scale(1.1);
     }
 
-    .teddy-img {
-      width: 80%;
-      max-width: 280px;
-      margin: 20px auto;
-      display: block;
-    }
-
-    .love-note {
-      text-align: right;
-      font-family: 'Comic Neue', cursive;
-      font-size: 1.1rem;
-      margin-top: 10px;
+    .no {
+      background: #fff;
+      color: #a47148;
+      position: absolute;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Start Card -->
+  <!-- Start card -->
   <div class="card" id="startCard">
-    <h1>Ready for a warm hug… or are you scared? 🧸😌</h1>
-    <button class="yes" onclick="showSurprise()">YES 🧸💗</button>
+    <h1>Are you ready for a teddy-sized hug? 🧸😏</h1>
+    <button onclick="showSurprise()">YESSS 🤎</button>
     <button class="no" id="noBtn">NO 🙈</button>
   </div>
 
@@ -117,49 +117,49 @@
     function showSurprise() {
       document.body.innerHTML = `
         <div class="card">
-          <h1>Happy Teddy Day 🧸💞</h1>
+          <h1>Happy Teddy Day 🧸</h1>
 
           <div class="poem">
-            If comfort had a face,<br>
-            it would look like you.<br>
-            Calm in my chaos,<br>
-            my safe place too.<br><br>
+            You are my comfort on tired days,<br>
+            my calm in every stormy way.<br>
+            If I could, I’d send you a teddy so tight,<br>
+            it’d hug you through the longest night.<br><br>
 
-            If I could, I’d send you a teddy<br>
-            as big as my love —<br>
-            until then, let this page hug you for me,<br>
-            my teddy bear 🤎🧸
+            Until then, let this page do it for me,<br>
+            wrapping you in love endlessly.<br>
+            My teddy bear, my safest place —<br>
+            forever my favorite embrace 🤎
           </div>
 
-          <img src="teddy.jpeg" alt="Cute Teddy" class="teddy-img">
+          <div class="teddy-img">
+            <img src="teddy.jpg" alt="Cute Teddy Couple">
+          </div>
 
           <div class="love-note">
-            with all my cuddles ❤️
+            with love ❤️
           </div>
         </div>
       `;
     }
 
-    /* NO button teasing */
+    /* No button tease */
     const noBtn = document.getElementById("noBtn");
     noBtn.addEventListener("mouseover", () => {
-      noBtn.style.position = "absolute";
-      noBtn.style.top = Math.random() * 80 + "%";
-      noBtn.style.left = Math.random() * 80 + "%";
+      noBtn.style.left = Math.random() * 70 + "%";
+      noBtn.style.top = Math.random() * 70 + "%";
     });
 
     /* Floating hearts & teddies */
     setInterval(() => {
-      const float = document.createElement("div");
-      float.classList.add("float");
-      float.innerText = Math.random() > 0.5 ? "🧸" : "💗";
-      float.style.left = Math.random() * 100 + "vw";
-      float.style.animationDuration = Math.random() * 5 + 6 + "s";
-      float.style.fontSize = Math.random() * 1.2 + 0.8 + "rem";
-      document.body.appendChild(float);
+      const icon = document.createElement("div");
+      icon.classList.add("float");
+      icon.innerText = Math.random() > 0.5 ? "🧸" : "🤎";
+      icon.style.left = Math.random() * 100 + "vw";
+      icon.style.animationDuration = Math.random() * 5 + 6 + "s";
+      document.body.appendChild(icon);
 
-      setTimeout(() => float.remove(), 12000);
-    }, 350);
+      setTimeout(() => icon.remove(), 12000);
+    }, 500);
   </script>
 
 </body>
