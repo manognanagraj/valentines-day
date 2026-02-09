@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Promise Day 🤍</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e8d9ff, #fff0f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Baloo 2', cursive;
+      color: #5a3a5c;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating icons */
+    .float {
+      position: absolute;
+      top: -10%;
+      font-size: 1.4rem;
+      opacity: 0.6;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(120vh) rotate(360deg);
+      }
+    }
+
+    .card {
+      background: rgba(255,255,255,0.75);
+      padding: 30px 24px;
+      border-radius: 26px;
+      max-width: 460px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto; /* scrolling */
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+    }
+
+    .poem {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin: 20px 0;
+    }
+
+    .image-box img {
+      width: 90%;
+      max-width: 320px;
+      border-radius: 20px;
+      margin: 25px auto;
+      display: block;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .love-note {
+      text-align: right;
+      font-size: 1.05rem;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    button {
+      padding: 12px 26px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin: 10px;
+      font-family: 'Baloo 2', cursive;
+    }
+
+    .yes {
+      background: #c77dff;
+      color: white;
+    }
+
+    .no {
+      background: white;
+      color: #c77dff;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Screen -->
+  <div class="card" id="startCard">
+    <h1>One tiny promise question… 🤍</h1>
+    <p>Will you promise to stay with me forever? 🥺</p>
+    <button class="yes" onclick="showPromise()">YES 🤍</button>
+    <button class="no" id="noBtn">NO 🙈</button>
+  </div>
+
+  <script>
+    function showPromise() {
+      document.body.innerHTML = `
+        <div class="card">
+          <h1>Happy Promise Day 🤍</h1>
+
+          <div class="poem">
+            I promise to remember the little things,<br>
+            the quiet smiles and late-night talks.<br><br>
+
+            To hold your hand on easy days,<br>
+            and stand by you when life gets hard.<br><br>
+
+            I promise to choose you — not once,<br>
+            but every day, in every way.<br><br>
+
+            No matter where life takes us,<br>
+            my heart will always find you 🤍
+
+            I promise to love you, today and always,<br>
+            not because I have to, but because I want to.<br><br>
+          </div>
+
+          <div class="image-box">
+            <img src="promise.jpeg" alt="Promise Day Image">
+          </div>
+
+          <div class="love-note">
+            with love ❤️
+          </div>
+        </div>
+      `;
+    }
+
+    /* No button runs away */
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", () => {
+      noBtn.style.position = "absolute";
+      noBtn.style.top = Math.random() * 80 + "%";
+      noBtn.style.left = Math.random() * 80 + "%";
+    });
+
+    /* Floating icons */
+    setInterval(() => {
+      const el = document.createElement("div");
+      el.classList.add("float");
+      el.innerText = ["🤍", "💍", "✨"][Math.floor(Math.random() * 3)];
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = Math.random() * 5 + 6 + "s";
+      document.body.appendChild(el);
+
+      setTimeout(() => el.remove(), 12000);
+    }, 450);
+  </script>
+
+</body>
+</html>
