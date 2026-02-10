@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hug Day 🤗</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffd6c9, #fff1e6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Baloo 2', cursive;
+      color: #6b3f2b;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating hearts */
+    .float {
+      position: absolute;
+      top: -10%;
+      font-size: 1.6rem;
+      opacity: 0.6;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(120vh) rotate(360deg);
+      }
+    }
+
+    .card {
+      background: #fff7f2;
+      padding: 30px 22px;
+      border-radius: 28px;
+      max-width: 460px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto; /* scrolling */
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.3rem;
+      margin-bottom: 18px;
+    }
+
+    .poem {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin: 22px 0;
+    }
+
+    .image-box img {
+      width: 90%;
+      max-width: 320px;
+      border-radius: 22px;
+      margin: 25px auto;
+      display: block;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+    }
+
+    .love-note {
+      text-align: right;
+      font-size: 1.05rem;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    button {
+      padding: 12px 26px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin: 10px;
+      font-family: 'Baloo 2', cursive;
+    }
+
+    .yes {
+      background: #ff9f80;
+      color: white;
+    }
+
+    .no {
+      background: white;
+      color: #ff9f80;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Screen -->
+  <div class="card" id="startCard">
+    <h1>Quick question… 🤗</h1>
+    <p>If I were there right now,<br>would you take my hug? 🥺</p>
+    <button class="yes" onclick="showHug()">YES 🤍</button>
+    <button class="no" id="noBtn">NO 🙈</button>
+  </div>
+
+  <script>
+    function showHug() {
+      document.body.innerHTML = `
+        <div class="card">
+          <h1>Happy Hug Day 🤗</h1>
+
+          <div class="poem">
+            Some days are heavy,<br>
+            some nights feel long,<br>
+            but your arms feel like<br>
+            where I belong.<br><br>
+
+            If I could hug you right now,<br>
+            I’d never let go that tight,<br>
+            I’d pour all my love<br>
+            into one warm embrace tonight.<br><br>
+
+            Until then, feel this hug through the screen —<br>
+            it’s always been you, my safe place 🤍
+          </div>
+
+          <div class="image-box">
+            <img src="hug.jpeg" alt="Cute Hug Couple">
+          </div>
+
+          <div class="love-note">
+            with love ❤️
+          </div>
+        </div>
+      `;
+    }
+
+    /* No button runs away */
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", () => {
+      noBtn.style.position = "absolute";
+      noBtn.style.top = Math.random() * 80 + "%";
+      noBtn.style.left = Math.random() * 80 + "%";
+    });
+
+    /* Floating icons */
+    setInterval(() => {
+      const el = document.createElement("div");
+      el.classList.add("float");
+      el.innerText = Math.random() > 0.5 ? "🤗" : "🤍";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = Math.random() * 5 + 6 + "s";
+      document.body.appendChild(el);
+
+      setTimeout(() => el.remove(), 12000);
+    }, 450);
+  </script>
+
+</body>
+</html>
