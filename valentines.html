@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine’s Surprise ❤️</title>
+<title>Valentine’s Big Surprise ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin:0;
+  overflow:hidden;
   font-family:'Pacifico',cursive;
   background:linear-gradient(135deg,#ff6f91,#ff9a9e);
   color:white;
-  overflow:hidden;
 }
 
 .screen {
@@ -43,41 +43,34 @@ button {
 }
 
 .slider {
-  display:flex;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  width:100vw;
   height:100vh;
+  width:100vw;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
 }
 
 .slide {
-  flex:0 0 100%;
+  height:100vh;
+  width:100vw;
   scroll-snap-align:start;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:20px;
-  box-sizing:border-box;
+  flex-direction:column;
+  position:relative;
 }
 
-.slide img {
-  max-width:70%;
-  border-radius:20px;
-  margin-top:20px;
+iframe {
+  width:100%;
+  height:100%;
+  border:none;
 }
 
 .message-box {
   max-width:600px;
-}
-
-.poem {
-  font-family:'Playfair Display',serif;
   font-size:1.1rem;
-  line-height:1.7;
-  overflow-y:auto;
-  max-height:70vh;
-  padding:20px;
+  line-height:1.6;
+  padding:30px;
 }
 
 video {
@@ -85,12 +78,21 @@ video {
   border-radius:20px;
 }
 
+.poem {
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;
+  line-height:1.7;
+  overflow-y:auto;
+  max-height:70vh;
+  padding:20px;
+}
+
 .envelope {
-  width:200px;
-  height:120px;
+  width:220px;
+  height:130px;
   background:#fff;
   position:relative;
-  border-radius:10px;
+  border-radius:12px;
   cursor:pointer;
 }
 
@@ -101,9 +103,9 @@ video {
   left:0;
   width:0;
   height:0;
-  border-left:100px solid transparent;
-  border-right:100px solid transparent;
-  border-bottom:60px solid #ff4d6d;
+  border-left:110px solid transparent;
+  border-right:110px solid transparent;
+  border-bottom:65px solid #ff4d6d;
 }
 
 .note {
@@ -120,7 +122,7 @@ video {
   <source src="perfect.mp3" type="audio/mp3">
 </audio>
 
-<!-- ENTRY SCREEN -->
+<!-- ENTRY -->
 <div class="screen" id="entry">
   <h1>Are you ready for the BIG surprise? 😏❤️</h1>
   <button onclick="start()">YES 💖</button>
@@ -130,58 +132,31 @@ video {
 <!-- SLIDER -->
 <div class="slider" id="slider" style="display:none;">
 
-  <!-- Rose -->
-  <div class="slide">
-    <h2>Rose Day 🌹</h2>
-    <img src="bouquet.png">
-  </div>
+  <div class="slide"><iframe src="rose.html"></iframe></div>
+  <div class="slide"><iframe src="propose.html"></iframe></div>
+  <div class="slide"><iframe src="chocolate.html"></iframe></div>
+  <div class="slide"><iframe src="teddy.html"></iframe></div>
+  <div class="slide"><iframe src="hug.html"></iframe></div>
+  <div class="slide"><iframe src="kiss.html"></iframe></div>
 
-  <!-- Propose -->
+  <!-- Emotional message -->
   <div class="slide">
-    <h2>Propose Day 💍</h2>
-    <img src="ring.jpeg">
-  </div>
-
-  <!-- Chocolate -->
-  <div class="slide">
-    <h2>Chocolate Day 🍫</h2>
-    <img src="chocolate.jpeg">
-  </div>
-
-  <!-- Teddy -->
-  <div class="slide">
-    <h2>Teddy Day 🧸</h2>
-    <img src="teddy.jpeg">
-  </div>
-
-  <!-- Hug -->
-  <div class="slide">
-    <h2>Hug Day 🤍</h2>
-    <img src="hug.jpeg">
-  </div>
-
-  <!-- Kiss -->
-  <div class="slide">
-    <h2>Kiss Day 💋</h2>
-    <img src="kiss.jpeg">
-  </div>
-
-  <!-- Emotional Message -->
-  <div class="slide message-box">
-    <p>
-    Baby, it’s been really really long…  
-    I’m done loving you through screens.  
-    I just want your arms, your warmth,  
-    endless talks and stupid laughs.  
-    I want us. Just us.  
-    Pretending the whole world belongs to us.  
-    </p>
-    <button onclick="showSecond()">YES 😌</button>
-    <button class="no" id="noBtn2">NO 🙈</button>
+    <div class="message-box">
+      Baby, it’s been really really long…<br><br>
+      I’m done loving you through screens.<br>
+      I just want your arms, your warmth,<br>
+      endless talks and stupid laughs.<br><br>
+      Pretending the whole world belongs to us.
+      <br><br>
+      So baby… do you wanna see something right now? 😌
+      <br><br>
+      <button onclick="goToVideo()">YES 😏</button>
+      <button class="no" id="noBtn2">NO 🙈</button>
+    </div>
   </div>
 
   <!-- VIDEO -->
-  <div class="slide" id="videoSlide" style="display:none;">
+  <div class="slide" id="videoSlide">
     <h2>Tap to play 🤍</h2>
     <video id="valVideo" controls>
       <source src="valentine.mp4" type="video/mp4">
@@ -189,15 +164,15 @@ video {
   </div>
 
   <!-- POEM -->
-  <div class="slide poem">
-    <h2>The Only Star in My Universe</h2>
-    <p>
-The Only Star in My Universe<br><br>
-
+  <div class="slide">
+    <div class="poem">
+      <p style="font-weight:bold; font-size:1.3rem; margin-bottom:20px;">
+The Only Star in My Universe </p>
+<p>
 June eighth, two thousand twenty-three,<br>
 A train moved north, and so did fate.<br>
 Steel tracks hummed beneath our feet,<br>
-Unknowing hearts arrived too late<br>
+Unknowing hearts arrived too late,<br>
 To pretend this was just chance.<br><br>
 
 We wore the same uniform,<br>
@@ -303,9 +278,9 @@ My once-in-a-lifetime.<br><br>
 And in a universe filled with stars,<br>
 You are the only one<br>
 My heart ever learned to orbit.
-
-    </p>
-    <button onclick="showEnvelope()">Next 💌</button>
+  </p>
+    </div>
+    <button onclick="scrollNext()">Next 💌</button>
   </div>
 
   <!-- ENVELOPE -->
@@ -334,11 +309,7 @@ noBtn.addEventListener("mouseover",()=>{
 function start(){
   music.play();
   document.getElementById("entry").style.display="none";
-  document.getElementById("slider").style.display="flex";
-}
-
-function showSecond(){
-  document.getElementById("videoSlide").style.display="flex";
+  document.getElementById("slider").style.display="block";
 }
 
 const video=document.getElementById("valVideo");
@@ -354,12 +325,18 @@ video.addEventListener("play",()=>{
   },200);
 });
 
-function showEnvelope(){
-  document.querySelector(".slider").scrollLeft+=window.innerWidth;
+function scrollNext(){
+  document.getElementById("slider").scrollBy({top:window.innerHeight,behavior:'smooth'});
 }
+
+function goToVideo(){
+  document.getElementById("slider").scrollBy({top:window.innerHeight,behavior:'smooth'});
+}
+
 function openEnvelope(){
   document.getElementById("finalNote").style.display="block";
 }
 </script>
+
 </body>
 </html>
