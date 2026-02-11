@@ -1,193 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Valentine’s Day ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine’s Surprise ❤️</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: 'Baloo 2', cursive;
-      background: #000;
-    }
+<style>
+body {
+  margin:0;
+  font-family:'Pacifico',cursive;
+  background:linear-gradient(135deg,#ff6f91,#ff9a9e);
+  color:white;
+  overflow:hidden;
+}
 
-    /* Audio hidden */
-    audio {
-      display: none;
-    }
+.screen {
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
 
-    /* Swipe container */
-    .slider {
-      display: flex;
-      width: 100vw;
-      height: 100vh;
-      transition: transform 0.6s ease;
-    }
+button {
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  margin:10px;
+  font-size:1rem;
+  cursor:pointer;
+  background:white;
+  color:#ff4d6d;
+}
 
-    .page {
-      min-width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 20px;
-      box-sizing: border-box;
-    }
+.no {
+  position:absolute;
+}
 
-    /* Card */
-    .card {
-      background: rgba(255,255,255,0.9);
-      padding: 30px 24px;
-      border-radius: 28px;
-      max-width: 460px;
-      width: 92%;
-      max-height: 90vh;
-      overflow-y: auto;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
+.slider {
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  width:100vw;
+  height:100vh;
+}
 
-    h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
+.slide {
+  flex:0 0 100%;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  box-sizing:border-box;
+}
 
-    p {
-      font-size: 1.2rem;
-      line-height: 1.7;
-    }
+.slide img {
+  max-width:70%;
+  border-radius:20px;
+  margin-top:20px;
+}
 
-    button {
-      padding: 12px 26px;
-      border-radius: 30px;
-      border: none;
-      font-size: 1.1rem;
-      cursor: pointer;
-      margin: 10px;
-    }
+.message-box {
+  max-width:600px;
+}
 
-    .yes {
-      background: #ff6fae;
-      color: white;
-    }
+.poem {
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;
+  line-height:1.7;
+  overflow-y:auto;
+  max-height:70vh;
+  padding:20px;
+}
 
-    .no {
-      background: white;
-      color: #ff6fae;
-      position: relative;
-    }
+video {
+  max-width:90%;
+  border-radius:20px;
+}
 
-    /* Progress dots */
-    .dots {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 10;
-    }
+.envelope {
+  width:200px;
+  height:120px;
+  background:#fff;
+  position:relative;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.4);
-    }
+.envelope:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
+  border-left:100px solid transparent;
+  border-right:100px solid transparent;
+  border-bottom:60px solid #ff4d6d;
+}
 
-    .dot.active {
-      background: white;
-    }
-  </style>
+.note {
+  display:none;
+  margin-top:20px;
+  font-family:'Playfair Display',serif;
+}
+</style>
 </head>
 
 <body>
 
-<!-- Background music -->
 <audio id="bgMusic" loop>
-  <source src="perfect.mp3" type="audio/mpeg">
+  <source src="perfect.mp3" type="audio/mp3">
 </audio>
 
-<div class="slider" id="slider">
+<!-- ENTRY SCREEN -->
+<div class="screen" id="entry">
+  <h1>Are you ready for the BIG surprise? 😏❤️</h1>
+  <button onclick="start()">YES 💖</button>
+  <button class="no" id="noBtn">NO 🙈</button>
+</div>
 
-  <!-- PAGE 1: ENTRY -->
-  <div class="page" style="background: linear-gradient(135deg, #ffafbd, #ffc3a0);">
-    <div class="card">
-      <h1>Are you ready for the big surprise? ❤️</h1>
-      <button class="yes" onclick="startJourney()">YES 💕</button>
-      <button class="no" id="noBtn">NO 🙈</button>
+<!-- SLIDER -->
+<div class="slider" id="slider" style="display:none;">
+
+  <!-- Rose -->
+  <div class="slide">
+    <h2>Rose Day 🌹</h2>
+    <img src="bouquet.png">
+  </div>
+
+  <!-- Propose -->
+  <div class="slide">
+    <h2>Propose Day 💍</h2>
+    <img src="ring.jpeg">
+  </div>
+
+  <!-- Chocolate -->
+  <div class="slide">
+    <h2>Chocolate Day 🍫</h2>
+    <img src="chocolate.jpeg">
+  </div>
+
+  <!-- Teddy -->
+  <div class="slide">
+    <h2>Teddy Day 🧸</h2>
+    <img src="teddy.jpeg">
+  </div>
+
+  <!-- Hug -->
+  <div class="slide">
+    <h2>Hug Day 🤍</h2>
+    <img src="hug.jpeg">
+  </div>
+
+  <!-- Kiss -->
+  <div class="slide">
+    <h2>Kiss Day 💋</h2>
+    <img src="kiss.jpeg">
+  </div>
+
+  <!-- Emotional Message -->
+  <div class="slide message-box">
+    <p>
+    Baby, it’s been really really long…  
+    I’m done loving you through screens.  
+    I just want your arms, your warmth,  
+    endless talks and stupid laughs.  
+    I want us. Just us.  
+    Pretending the whole world belongs to us.  
+    </p>
+    <button onclick="showSecond()">YES 😌</button>
+    <button class="no" id="noBtn2">NO 🙈</button>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="slide" id="videoSlide" style="display:none;">
+    <h2>Tap to play 🤍</h2>
+    <video id="valVideo" controls>
+      <source src="valentine.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- POEM -->
+  <div class="slide poem">
+    <h2>The Only Star in My Universe</h2>
+    <p>
+The Only Star in My Universe<br><br>
+
+June eighth, two thousand twenty-three,<br>
+A train moved north, and so did fate.<br>
+Steel tracks hummed beneath our feet,<br>
+Unknowing hearts arrived too late<br>
+To pretend this was just chance.<br><br>
+
+We wore the same uniform,<br>
+Yet you stood apart —<br>
+Not louder, not brighter,<br>
+Just gentler.<br>
+You watched if I ate,<br>
+If I rested,<br>
+If loneliness ever brushed past me.<br>
+Without asking,<br>
+You chose to care.<br><br>
+
+Eleven p.m. found me awake,<br>
+On an upper berth of quiet thoughts,<br>
+Scrolling through nothing,<br>
+Feeling everything.<br>
+You looked up and asked,<br>
+“Would you like to join us?”<br><br>
+
+I said yes —<br>
+And somehow, the world narrowed<br>
+Until it was only you and me.<br><br>
+
+From eleven to four,<br>
+Time forgot itself.<br>
+Words spilled like they had been waiting<br>
+Across lifetimes.<br>
+No sleep.<br>
+No silence.<br>
+Just two souls learning each other<br>
+Under dim lights and passing stars.<br>
+That night still breathes inside my heart.<br><br>
+
+At camp, we danced.<br>
+Not for rhythm, not for show —<br>
+But because closeness felt natural,<br>
+And joy found its way to our hands.<br><br>
+
+June twenty-first arrived too soon.<br>
+Suitcases stood where courage should have been.<br>
+That goodbye hurt<br>
+Because love had already taken root.<br>
+We cried,<br>
+Not because it was ending,<br>
+But because we knew<br>
+It wasn’t meant to.<br><br>
+
+Distance tried its hand at us —<br>
+Late calls, glowing screens,<br>
+Voices wrapped around midnight.<br>
+We were inseparable,<br>
+Just measured in miles.<br><br>
+
+September first.<br>
+Music waiting in the dark.<br>
+Getting ready, laughter hanging softly between us.<br>
+Then —<br>
+A kiss.<br>
+My first.<br>
+Gentle. Certain.<br>
+Like truth finally spoken aloud.<br><br>
+
+From that moment,<br>
+Words changed.<br>
+Boyfriend. Girlfriend.<br>
+But what we really became<br>
+Was home.<br><br>
+
+We do not fight to win.<br>
+We choose to understand.<br>
+We bend toward each other<br>
+When the world feels heavy.<br>
+And that, to me,<br>
+Is love.<br><br>
+
+I don’t know when I knew you were the one.<br>
+I only know my heart recognized you<br>
+Before my mind could ask why.<br><br>
+
+I call you mannuuu.<br>
+I tell you everything —<br>
+The chaos, the calm,<br>
+The nonsense and the meaning.<br>
+And you listen,<br>
+Steady as always.<br><br>
+
+You say you don’t have a girlfriend.<br>
+You say you have your wife,<br>
+Your queen.<br>
+And every time you say it,<br>
+My heart forgets how to be quiet.<br><br>
+
+You love me loudly,<br>
+Gently,<br>
+Every day.<br>
+Not just in beginnings,<br>
+But in continuations.<br><br>
+
+You are my man.<br>
+My safe place.<br>
+My once-in-a-lifetime.<br><br>
+
+And in a universe filled with stars,<br>
+You are the only one<br>
+My heart ever learned to orbit.
+
+    </p>
+    <button onclick="showEnvelope()">Next 💌</button>
+  </div>
+
+  <!-- ENVELOPE -->
+  <div class="slide">
+    <div class="envelope" onclick="openEnvelope()"></div>
+    <div class="note" id="finalNote">
+      <p>I love you always and forever mannu 🤍</p>
+      <p>Happy Valentine’s love ❤️</p>
+      <p style="opacity:0.6;font-size:0.9rem;text-align:right;">
+      call me as soon as you watch this
+      </p>
     </div>
   </div>
 
-  <!-- PAGE 2–8 placeholders (will become mini days) -->
-  <div class="page" style="background:#fef1f6;"><div class="card"><h1>🌹 Rose Day</h1></div></div>
-  <div class="page" style="background:#f2e9ff;"><div class="card"><h1>💍 Propose Day</h1></div></div>
-  <div class="page" style="background:#f6ede7;"><div class="card"><h1>🍫 Chocolate Day</h1></div></div>
-  <div class="page" style="background:#fff1e6;"><div class="card"><h1>🧸 Teddy Day</h1></div></div>
-  <div class="page" style="background:#f4f0ff;"><div class="card"><h1>🤍 Promise Day</h1></div></div>
-  <div class="page" style="background:#fff5f0;"><div class="card"><h1>🤗 Hug Day</h1></div></div>
-  <div class="page" style="background:#fff0f6;"><div class="card"><h1>😘 Kiss Day</h1></div></div>
-
 </div>
 
-<!-- Progress dots -->
-<div class="dots" id="dots"></div>
-
 <script>
-  let index = 0;
-  const slider = document.getElementById("slider");
-  const dots = document.getElementById("dots");
-  const pages = document.querySelectorAll(".page");
-  const music = document.getElementById("bgMusic");
+const music=document.getElementById("bgMusic");
+const noBtn=document.getElementById("noBtn");
 
-  // Create dots
-  pages.forEach((_, i) => {
-    const d = document.createElement("div");
-    d.className = "dot" + (i === 0 ? " active" : "");
-    dots.appendChild(d);
-  });
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.top=Math.random()*80+"%";
+  noBtn.style.left=Math.random()*80+"%";
+});
 
-  function updateDots() {
-    document.querySelectorAll(".dot").forEach((d, i) => {
-      d.classList.toggle("active", i === index);
-    });
-  }
+function start(){
+  music.play();
+  document.getElementById("entry").style.display="none";
+  document.getElementById("slider").style.display="flex";
+}
 
-  function startJourney() {
-    music.volume = 0.4;
-    music.play();
-    moveTo(1);
-  }
+function showSecond(){
+  document.getElementById("videoSlide").style.display="flex";
+}
 
-  function moveTo(i) {
-    index = i;
-    slider.style.transform = `translateX(-${index * 100}vw)`;
-    updateDots();
-  }
+const video=document.getElementById("valVideo");
 
-  // Swipe handling
-  let startX = 0;
-  document.addEventListener("touchstart", e => startX = e.touches[0].clientX);
-  document.addEventListener("touchend", e => {
-    let diff = e.changedTouches[0].clientX - startX;
-    if (diff < -50 && index < pages.length - 1) moveTo(index + 1);
-    if (diff > 50 && index > 0) moveTo(index - 1);
-  });
+video.addEventListener("play",()=>{
+  let fade=setInterval(()=>{
+    if(music.volume>0.05){
+      music.volume-=0.05;
+    }else{
+      music.pause();
+      clearInterval(fade);
+    }
+  },200);
+});
 
-  // NO button runs away
-  const noBtn = document.getElementById("noBtn");
-  noBtn.addEventListener("mouseover", () => {
-    noBtn.style.top = Math.random() * 70 + "%";
-    noBtn.style.left = Math.random() * 70 + "%";
-  });
+function showEnvelope(){
+  document.querySelector(".slider").scrollLeft+=window.innerWidth;
+}
+function openEnvelope(){
+  document.getElementById("finalNote").style.display="block";
+}
 </script>
-
 </body>
 </html>
