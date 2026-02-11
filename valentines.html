@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine’s Day ❤️</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Baloo 2', cursive;
+      background: #000;
+    }
+
+    /* Audio hidden */
+    audio {
+      display: none;
+    }
+
+    /* Swipe container */
+    .slider {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      transition: transform 0.6s ease;
+    }
+
+    .page {
+      min-width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255,255,255,0.9);
+      padding: 30px 24px;
+      border-radius: 28px;
+      max-width: 460px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+    }
+
+    button {
+      padding: 12px 26px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .yes {
+      background: #ff6fae;
+      color: white;
+    }
+
+    .no {
+      background: white;
+      color: #ff6fae;
+      position: relative;
+    }
+
+    /* Progress dots */
+    .dots {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .dot.active {
+      background: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Background music -->
+<audio id="bgMusic" loop>
+  <source src="perfect.mp3" type="audio/mpeg">
+</audio>
+
+<div class="slider" id="slider">
+
+  <!-- PAGE 1: ENTRY -->
+  <div class="page" style="background: linear-gradient(135deg, #ffafbd, #ffc3a0);">
+    <div class="card">
+      <h1>Are you ready for the big surprise? ❤️</h1>
+      <button class="yes" onclick="startJourney()">YES 💕</button>
+      <button class="no" id="noBtn">NO 🙈</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2–8 placeholders (will become mini days) -->
+  <div class="page" style="background:#fef1f6;"><div class="card"><h1>🌹 Rose Day</h1></div></div>
+  <div class="page" style="background:#f2e9ff;"><div class="card"><h1>💍 Propose Day</h1></div></div>
+  <div class="page" style="background:#f6ede7;"><div class="card"><h1>🍫 Chocolate Day</h1></div></div>
+  <div class="page" style="background:#fff1e6;"><div class="card"><h1>🧸 Teddy Day</h1></div></div>
+  <div class="page" style="background:#f4f0ff;"><div class="card"><h1>🤍 Promise Day</h1></div></div>
+  <div class="page" style="background:#fff5f0;"><div class="card"><h1>🤗 Hug Day</h1></div></div>
+  <div class="page" style="background:#fff0f6;"><div class="card"><h1>😘 Kiss Day</h1></div></div>
+
+</div>
+
+<!-- Progress dots -->
+<div class="dots" id="dots"></div>
+
+<script>
+  let index = 0;
+  const slider = document.getElementById("slider");
+  const dots = document.getElementById("dots");
+  const pages = document.querySelectorAll(".page");
+  const music = document.getElementById("bgMusic");
+
+  // Create dots
+  pages.forEach((_, i) => {
+    const d = document.createElement("div");
+    d.className = "dot" + (i === 0 ? " active" : "");
+    dots.appendChild(d);
+  });
+
+  function updateDots() {
+    document.querySelectorAll(".dot").forEach((d, i) => {
+      d.classList.toggle("active", i === index);
+    });
+  }
+
+  function startJourney() {
+    music.volume = 0.4;
+    music.play();
+    moveTo(1);
+  }
+
+  function moveTo(i) {
+    index = i;
+    slider.style.transform = `translateX(-${index * 100}vw)`;
+    updateDots();
+  }
+
+  // Swipe handling
+  let startX = 0;
+  document.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+  document.addEventListener("touchend", e => {
+    let diff = e.changedTouches[0].clientX - startX;
+    if (diff < -50 && index < pages.length - 1) moveTo(index + 1);
+    if (diff > 50 && index > 0) moveTo(index - 1);
+  });
+
+  // NO button runs away
+  const noBtn = document.getElementById("noBtn");
+  noBtn.addEventListener("mouseover", () => {
+    noBtn.style.top = Math.random() * 70 + "%";
+    noBtn.style.left = Math.random() * 70 + "%";
+  });
+</script>
+
+</body>
+</html>
