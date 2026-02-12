@@ -137,32 +137,149 @@ video {
 
 </style>
 </head>
-  <script>
+ <script>
 
-/* Fade-in on scroll */
-const sections = document.querySelectorAll(".section");
+const bgMusic = document.getElementById("bgMusic");
+const video = document.querySelector("video");
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
+/* Start Experience */
+function startExperience() {
+  bgMusic.volume = 0.5;
+  bgMusic.play();
+  window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+}
+
+/* Fade Music During Video */
+if (video) {
+  video.addEventListener("play", () => {
+    let fade = setInterval(() => {
+      if (bgMusic.volume > 0.05) {
+        bgMusic.volume -= 0.05;
+      } else {
+        bgMusic.pause();
+        clearInterval(fade);
+      }
+    }, 200);
   });
-}, { threshold: 0.2 });
+}
 
-sections.forEach(section => observer.observe(section));
+/* Add Second Yes/No Logic */
+const emotionalSection = document.querySelectorAll(".section")[8];
+if (emotionalSection) {
+  const noBtn = document.createElement("button");
+  noBtn.textContent = "No";
+  noBtn.style.position = "absolute";
+  noBtn.style.background = "#5a1022";
+  noBtn.style.color = "#e6c7a6";
+  noBtn.style.border = "1px solid #d4af37";
+  emotionalSection.appendChild(noBtn);
 
-/* Subtle floating romantic elements */
-setInterval(() => {
-  const icons = ["🌹", "💋", "🤍"];
-  const el = document.createElement("div");
-  el.className = "float";
-  el.innerText = icons[Math.floor(Math.random() * icons.length)];
-  el.style.left = Math.random() * 100 + "vw";
-  el.style.animationDuration = (10 + Math.random() * 8) + "s";
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 18000);
-}, 2000);
+  noBtn.addEventListener("mouseover", () => {
+    noBtn.style.top = Math.random() * 70 + "%";
+    noBtn.style.left = Math.random() * 70 + "%";
+  });
+}
+
+/* Heart Beat Animation Enhancement */
+const heartSection = document.querySelectorAll(".section")[9];
+if (heartSection) {
+  const heart = heartSection.querySelector("div");
+  heart.style.animation = "beat 1.6s infinite ease-in-out";
+  heart.style.color = "#d4af37";
+}
+
+/* ENVELOPE ANIMATION */
+
+const envelopeSection = document.querySelectorAll(".section")[12];
+if (envelopeSection) {
+
+  envelopeSection.innerHTML = `
+    <div class="envelope-wrapper" style="position:relative;perspective:1000px;">
+      <div id="envelope" style="
+        width:340px;
+        height:220px;
+        background:linear-gradient(145deg,#5a1022,#3a0012);
+        border-radius:12px;
+        box-shadow:0 25px 50px rgba(0,0,0,0.8);
+        position:relative;
+        cursor:pointer;
+        ">
+        
+        <div id="flap" style="
+          width:100%;
+          height:100%;
+          background:#4b0f1f;
+          clip-path:polygon(0 0, 100% 0, 50% 55%);
+          position:absolute;
+          transform-origin:top;
+          transition:transform 1s cubic-bezier(0.77,0,0.175,1);
+        "></div>
+
+        <div style="
+          position:absolute;
+          top:85px;
+          left:50%;
+          transform:translateX(-50%);
+          font-size:2rem;
+          color:#d4af37;
+        ">❤️</div>
+
+        <div id="letter" style="
+          position:absolute;
+          width:85%;
+          height:160px;
+          background:#f6eee3;
+          top:30px;
+          left:50%;
+          transform:translateX(-50%) translateY(80px);
+          opacity:0;
+          padding:20px;
+          box-sizing:border-box;
+          transition:all 1s ease 0.5s;
+          text-align:center;
+          font-family:'Playfair Display', serif;
+          color:#5a1022;
+          font-size:1.1rem;
+        ">
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  const envelope = document.getElementById("envelope");
+  const flap = document.getElementById("flap");
+  const letter = document.getElementById("letter");
+
+  envelope.addEventListener("click", () => {
+    flap.style.transform = "rotateX(180deg)";
+    setTimeout(() => {
+      letter.style.opacity = "1";
+      letter.style.transform = "translateX(-50%) translateY(-60px)";
+      typeLetter();
+    }, 900);
+  });
+
+  function typeLetter() {
+    const text = "I love you always and forever, Mannu ❤️\n\nHappy Valentine’s love 💌";
+    let i = 0;
+    letter.innerHTML = "";
+    const typing = setInterval(() => {
+      if (i < text.length) {
+        letter.innerHTML += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(typing);
+        const small = document.createElement("div");
+        small.textContent = "call me as soon as you see this";
+        small.style.marginTop = "20px";
+        small.style.fontSize = "0.8rem";
+        small.style.opacity = "0.6";
+        letter.appendChild(small);
+      }
+    }, 60);
+  }
+}
 
 </script>
 
