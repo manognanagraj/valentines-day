@@ -3,98 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine 2026 ❤️</title>
+<title>Valentine 2026</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-body {
+html, body {
   margin:0;
+  padding:0;
+  height:100%;
   overflow:hidden;
+  font-family:'Playfair Display', serif;
   background:black;
-  color:white;
-  font-family:'Pacifico',cursive;
+  color:#f5e6d3;
 }
 
-.slider {
-  display:flex;
-  width:100vw;
+/* Smooth scroll snap */
+.container {
   height:100vh;
-  transition:transform 0.8s ease;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
 }
 
-.slide {
-  min-width:100vw;
+.section {
   height:100vh;
+  scroll-snap-align:start;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
   text-align:center;
-  position:relative;
-  padding:40px;
+  padding:60px;
   box-sizing:border-box;
+  position:relative;
+}
+
+/* Intro */
+.intro {
+  background:black;
+  transition:background 2s ease;
+}
+
+.bloom {
+  background:radial-gradient(circle at center, #5a001f 0%, #1a0008 60%, black 100%);
+}
+
+button {
+  padding:14px 32px;
+  border-radius:30px;
+  border:1px solid #d4af37;
+  background:transparent;
+  color:#f5e6d3;
+  font-size:1rem;
+  margin:15px;
+  cursor:pointer;
+  transition:all 0.4s ease;
+}
+
+button:hover {
+  background:#d4af37;
+  color:black;
+}
+
+.no {
+  position:absolute;
+}
+
+/* Recap sections */
+.recap {
+  background:linear-gradient(180deg,#4a0016,#1a0008);
 }
 
 .recap h2 {
   font-size:3rem;
-  margin-bottom:20px;
+  margin-bottom:25px;
 }
 
 .recap p {
   font-size:1.6rem;
   max-width:600px;
+  line-height:1.6;
 }
 
-.emoji {
+/* Gold dust particles */
+.particle {
   position:absolute;
-  font-size:2rem;
-  animation:float 8s linear infinite;
-  opacity:0.5;
+  width:6px;
+  height:6px;
+  background:#d4af37;
+  border-radius:50%;
+  opacity:0.4;
+  animation:float 10s linear infinite;
 }
 
 @keyframes float {
   from { transform:translateY(100vh); }
-  to { transform:translateY(-100vh); }
+  to { transform:translateY(-10vh); }
 }
 
-.arrow {
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:2.5rem;
-  cursor:pointer;
-  opacity:0.7;
-  z-index:10;
+/* Emotional */
+.emotional {
+  background:black;
 }
 
-.left { left:20px; }
-.right { right:20px; }
-
-.poem {
-  font-family:'Playfair Display',serif;
-  font-size:1.3rem;
-  line-height:1.8;
-  max-height:70vh;
-  overflow-y:auto;
-  padding:20px;
-}
-
+/* Heart */
 .heart {
-  font-size:5rem;
+  font-size:6rem;
   cursor:pointer;
-  animation:beat 1.5s infinite;
+  animation:beat 1.6s infinite;
 }
 
 @keyframes beat {
   0%,100% { transform:scale(1); }
-  50% { transform:scale(1.2); }
+  50% { transform:scale(1.15); }
+}
+
+/* Video */
+video {
+  max-width:90%;
+  border-radius:20px;
+}
+
+/* Poem */
+.poem {
+  background:linear-gradient(180deg,#1a0008,#2a0010);
+  overflow-y:auto;
+  font-size:1.2rem;
+  line-height:1.9;
+}
+
+/* Envelope */
+.envelope-section {
+  background:#1a0008;
+}
+
+.envelope {
+  width:320px;
+  height:200px;
+  background:#fffaf0;
+  border:3px solid #d4af37;
+  position:relative;
+  border-radius:12px;
+}
+
+.flap {
+  width:0;
+  height:0;
+  border-left:160px solid transparent;
+  border-right:160px solid transparent;
+  border-bottom:100px solid #d4af37;
+  position:absolute;
+  top:0;
+  left:0;
+  transform-origin:top;
+  transition:transform 1s cubic-bezier(0.77,0,0.175,1);
 }
 
 .letter {
+  position:absolute;
+  width:280px;
+  height:150px;
+  background:#fffaf0;
+  top:60px;
+  left:20px;
+  padding:20px;
+  display:none;
   font-size:1.2rem;
+  color:#4a0016;
 }
 
+.subtle {
+  position:absolute;
+  bottom:15px;
+  right:20px;
+  font-size:0.9rem;
+  opacity:0.6;
+}
 </style>
 </head>
 
@@ -104,222 +189,194 @@ body {
   <source src="perfect.mp3" type="audio/mp3">
 </audio>
 
-<div class="slider" id="slider">
+<div class="container" id="container">
 
-  <!-- INTRO -->
-  <div class="slide intro">
-    <h1>wanna recap 2026 valentine’s? ✨</h1>
-    <button onclick="start()">YES 💖</button>
-    <button id="noBtn">NO 🙈</button>
-  </div>
+<!-- INTRO -->
+<div class="section intro" id="intro">
+  <h1 style="font-size:3rem;">Shall we revisit our 2026 Valentine’s?</h1>
+  <button onclick="start()">YES</button>
+  <button id="noBtn" class="no">NO</button>
+</div>
 
-  <!-- ROSE -->
-  <div class="slide recap" style="background:#ffafbd;">
-    <h2>Rose Day 🌹</h2>
-    <p>Among every flower, my eyes still chose you.</p>
-  </div>
+<!-- RECAP SECTIONS -->
+<div class="section recap"><h2>Rose Day</h2><p>Among every flower, my heart chose you.</p></div>
+<div class="section recap"><h2>Propose Day</h2><p>From strangers to forever in just one kiss.</p></div>
+<div class="section recap"><h2>Chocolate Day</h2><p>Sweet days taste better when shared with you.</p></div>
+<div class="section recap"><h2>Teddy Day</h2><p>My comfort, my warmth, my safe place.</p></div>
+<div class="section recap"><h2>Promise Day</h2><p>I choose you every single day.</p></div>
+<div class="section recap"><h2>Hug Day</h2><p>Your arms are where my world rests.</p></div>
+<div class="section recap"><h2>Kiss Day</h2><p>Every kiss still feels like the first.</p></div>
 
-  <!-- PROPOSE -->
-  <div class="slide recap" style="background:#e0c3fc;">
-    <h2>Propose Day 💍</h2>
-    <p>From strangers to forever in just one kiss.</p>
-  </div>
-
-  <!-- CHOCOLATE -->
-  <div class="slide recap" style="background:#f6d365;">
-    <h2>Chocolate Day 🍫</h2>
-    <p>Sweet days taste better when they’re shared with you.</p>
-  </div>
-
-  <!-- TEDDY -->
-  <div class="slide recap" style="background:#fbc2eb;">
-    <h2>Teddy Day 🧸</h2>
-    <p>My comfort, my warmth, my favorite safe place.</p>
-  </div>
-
-  <!-- PROMISE -->
-  <div class="slide recap" style="background:#cfd9df;">
-    <h2>Promise Day 🤍</h2>
-    <p>I choose you every day, without hesitation.</p>
-  </div>
-
-  <!-- HUG -->
-  <div class="slide recap" style="background:#ffd1ff;">
-    <h2>Hug Day 🤗</h2>
-    <p>Your arms are where my world finally feels still.</p>
-  </div>
-
-  <!-- KISS -->
-  <div class="slide recap" style="background:#ff9a9e;">
-    <h2>Kiss Day 😘</h2>
-    <p>Every kiss with you still feels like the first.</p>
-  </div>
-
-  <!-- EMOTIONAL -->
-  <div class="slide" style="background:black;">
-    <h2>baby…</h2>
-    <p style="max-width:500px;">
+<!-- EMOTIONAL -->
+<div class="section emotional">
+  <h2>baby…</h2>
+  <p style="font-size:1.4rem;">
     it’s been really, really long.<br>
-    i’m done loving you through screens.<br>
-    so… are you ready for the big surprise? 💫
-    </p>
-    <button onclick="nextSlide()">YES 💖</button>
-  </div>
+    i’m done loving you through screens.<br><br>
+    so, are you ready for the big surprise?
+  </p>
+  <button onclick="scrollNext()">YES</button>
+</div>
 
-  <!-- HEART -->
-  <div class="slide" style="background:black;">
-    <div class="heart" onclick="showVideo()">❤️</div>
-    <p>tap the heart 💖</p>
-  </div>
+<!-- HEART -->
+<div class="section emotional">
+  <div class="heart" onclick="scrollNext()">❤️</div>
+  <p>tap the heart</p>
+</div>
 
-  <!-- VIDEO -->
-  <div class="slide" style="background:black;">
-    <video id="video" controls>
-      <source src="valentine.mp4" type="video/mp4">
-    </video>
-  </div>
+<!-- VIDEO -->
+<div class="section emotional">
+  <video id="video" controls>
+    <source src="valentine.mp4" type="video/mp4">
+  </video>
+</div>
 
+<!-- POEM -->
+<div class="section poem">
   <!-- POEM -->
-  <div class="slide" style="background:#111;">
-    <div class="poem">
-      <!-- Paste your full formatted poem here -->
-      <p style="font-weight:bold; font-size:1.3rem; margin-bottom:20px;">The Only Star in My Universe</p>
-<p>
-June eighth, two thousand twenty-three,<br>
-A train moved north, and so did fate.<br>
-Steel tracks hummed beneath our feet,<br>
-Unknowing hearts arrived too late<br>
-To pretend this was just chance.<br><br>
+<div class="section poem">
+  <div style="max-width:800px; margin:auto;">
 
-We wore the same uniform,<br>
-Yet you stood apart —<br>
-Not louder, not brighter,<br>
-Just gentler.<br>
-You watched if I ate,<br>
-If I rested,<br>
-If loneliness ever brushed past me.<br>
-Without asking,<br>
-You chose to care.<br><br>
-
-Eleven p.m. found me awake,<br>
-On an upper berth of quiet thoughts,<br>
-Scrolling through nothing,<br>
-Feeling everything.<br>
-You looked up and asked,<br>
-“Would you like to join us?”<br><br>
-
-I said yes —<br>
-And somehow, the world narrowed<br>
-Until it was only you and me.<br><br>
-
-From eleven to four,<br>
-Time forgot itself.<br>
-Words spilled like they had been waiting<br>
-Across lifetimes.<br>
-No sleep.<br>
-No silence.<br>
-Just two souls learning each other<br>
-Under dim lights and passing stars.<br>
-That night still breathes inside my heart.<br><br>
-
-At camp, we danced.<br>
-Not for rhythm, not for show —<br>
-But because closeness felt natural,<br>
-And joy found its way to our hands.<br><br>
-
-June twenty-first arrived too soon.<br>
-Suitcases stood where courage should have been.<br>
-That goodbye hurt<br>
-Because love had already taken root.<br>
-We cried,<br>
-Not because it was ending,<br>
-But because we knew<br>
-It wasn’t meant to.<br><br>
-
-Distance tried its hand at us —<br>
-Late calls, glowing screens,<br>
-Voices wrapped around midnight.<br>
-We were inseparable,<br>
-Just measured in miles.<br><br>
-
-September first.<br>
-Music waiting in the dark.<br>
-Getting ready, laughter hanging softly between us.<br>
-Then —<br>
-A kiss.<br>
-My first.<br>
-Gentle. Certain.<br>
-Like truth finally spoken aloud.<br><br>
-
-From that moment,<br>
-Words changed.<br>
-Boyfriend. Girlfriend.<br>
-But what we really became<br>
-Was home.<br><br>
-
-We do not fight to win.<br>
-We choose to understand.<br>
-We bend toward each other<br>
-When the world feels heavy.<br>
-And that, to me,<br>
-Is love.<br><br>
-
-I don’t know when I knew you were the one.<br>
-I only know my heart recognized you<br>
-Before my mind could ask why.<br><br>
-
-I call you mannuuu.<br>
-I tell you everything —<br>
-The chaos, the calm,<br>
-The nonsense and the meaning.<br>
-And you listen,<br>
-Steady as always.<br><br>
-
-You say you don’t have a girlfriend.<br>
-You say you have your wife,<br>
-Your queen.<br>
-And every time you say it,<br>
-My heart forgets how to be quiet.<br><br>
-
-You love me loudly,<br>
-Gently,<br>
-Every day.<br>
-Not just in beginnings,<br>
-But in continuations.<br><br>
-
-You are my man.<br>
-My safe place.<br>
-My once-in-a-lifetime.<br><br>
-
-And in a universe filled with stars,<br>
-You are the only one<br>
-My heart ever learned to orbit.
-</p>
-    </div>
-    <button onclick="nextSlide()">Next 💌</button>
+  <div style="font-size:2rem; font-weight:600; margin-bottom:40px;">
+  The Only Star in My Universe
   </div>
 
-  <!-- ENVELOPE -->
-  <div class="slide" style="background:#1a001f;">
-    <div class="envelope">
-      <div class="flap" id="flap"></div>
-      <div class="letter" id="letter"></div>
-    </div>
-    <div class="subtle">call me as soon as you watch this</div>
+  June eighth, two thousand twenty-three,<br>
+  A train moved north, and so did fate.<br>
+  Steel tracks hummed beneath our feet,<br>
+  Unknowing hearts arrived too late<br>
+  To pretend this was just chance.<br><br>
+
+  We wore the same uniform,<br>
+  Yet you stood apart —<br>
+  Not louder, not brighter,<br>
+  Just gentler.<br>
+  You watched if I ate,<br>
+  If I rested,<br>
+  If loneliness ever brushed past me.<br>
+  Without asking,<br>
+  You chose to care.<br><br>
+
+  Eleven p.m. found me awake,<br>
+  On an upper berth of quiet thoughts,<br>
+  Scrolling through nothing,<br>
+  Feeling everything.<br>
+  You looked up and asked,<br>
+  “Would you like to join us?”<br><br>
+
+  I said yes —<br>
+  And somehow, the world narrowed<br>
+  Until it was only you and me.<br><br>
+
+  From eleven to four,<br>
+  Time forgot itself.<br>
+  Words spilled like they had been waiting<br>
+  Across lifetimes.<br>
+  No sleep.<br>
+  No silence.<br>
+  Just two souls learning each other<br>
+  Under dim lights and passing stars.<br>
+  That night still breathes inside my heart.<br><br>
+
+  At camp, we danced.<br>
+  Not for rhythm, not for show —<br>
+  But because closeness felt natural,<br>
+  And joy found its way to our hands.<br><br>
+
+  June twenty-first arrived too soon.<br>
+  Suitcases stood where courage should have been.<br>
+  That goodbye hurt<br>
+  Because love had already taken root.<br>
+  We cried,<br>
+  Not because it was ending,<br>
+  But because we knew<br>
+  It wasn’t meant to.<br><br>
+
+  Distance tried its hand at us —<br>
+  Late calls, glowing screens,<br>
+  Voices wrapped around midnight.<br>
+  We were inseparable,<br>
+  Just measured in miles.<br><br>
+
+  September first.<br>
+  Music waiting in the dark.<br>
+  Getting ready, laughter hanging softly between us.<br>
+  Then —<br>
+  A kiss.<br>
+  My first.<br>
+  Gentle. Certain.<br>
+  Like truth finally spoken aloud.<br><br>
+
+  From that moment,<br>
+  Words changed.<br>
+  Boyfriend. Girlfriend.<br>
+  But what we really became<br>
+  Was home.<br><br>
+
+  We do not fight to win.<br>
+  We choose to understand.<br>
+  We bend toward each other<br>
+  When the world feels heavy.<br>
+  And that, to me,<br>
+  Is love.<br><br>
+
+  I don’t know when I knew you were the one.<br>
+  I only know my heart recognized you<br>
+  Before my mind could ask why.<br><br>
+
+  I call you mannuuu.<br>
+  I tell you everything —<br>
+  The chaos, the calm,<br>
+  The nonsense and the meaning.<br>
+  And you listen,<br>
+  Steady as always.<br><br>
+
+  You say you don’t have a girlfriend.<br>
+  You say you have your wife,<br>
+  Your queen.<br>
+  And every time you say it,<br>
+  My heart forgets how to be quiet.<br><br>
+
+  You love me loudly,<br>
+  Gently,<br>
+  Every day.<br>
+  Not just in beginnings,<br>
+  But in continuations.<br><br>
+
+  You are my man.<br>
+  My safe place.<br>
+  My once-in-a-lifetime.<br><br>
+
+  And in a universe filled with stars,<br>
+  You are the only one<br>
+  My heart ever learned to orbit.
+
   </div>
+</div>
+
+</div>
+
+<!-- ENVELOPE -->
+<div class="section envelope-section">
+  <div class="envelope">
+    <div class="flap" id="flap"></div>
+    <div class="letter" id="letter"></div>
+  </div>
+  <div class="subtle">call me as soon as you see this</div>
+</div>
 
 </div>
 
 <script>
-let index = 0;
-const slider = document.getElementById("slider");
-const music = document.getElementById("music");
-const video = document.getElementById("video");
-const noBtn = document.getElementById("noBtn");
-const slides = document.querySelectorAll(".slide");
+const music=document.getElementById("music");
+const noBtn=document.getElementById("noBtn");
+const container=document.getElementById("container");
+const intro=document.getElementById("intro");
+const video=document.getElementById("video");
+const flap=document.getElementById("flap");
+const letter=document.getElementById("letter");
 
 noBtn.addEventListener("mouseover",()=>{
-  noBtn.style.position="absolute";
   noBtn.style.top=Math.random()*80+"%";
   noBtn.style.left=Math.random()*80+"%";
 });
@@ -327,65 +384,14 @@ noBtn.addEventListener("mouseover",()=>{
 function start(){
   music.volume=0.4;
   music.play();
-  moveTo(1);
+  intro.classList.add("bloom");
+  setTimeout(()=>container.scrollBy({top:window.innerHeight,behavior:"smooth"}),1000);
 }
 
-function moveTo(i){
-  if(i>=0 && i<slides.length){
-    index=i;
-    slider.style.transform=`translateX(-${index*100}vw)`;
-  }
+function scrollNext(){
+  container.scrollBy({top:window.innerHeight,behavior:"smooth"});
 }
 
-function nextSlide(){
-  moveTo(index+1);
-}
-
-function prevSlide(){
-  moveTo(index-1);
-}
-
-/* Keyboard arrows */
-document.addEventListener("keydown",e=>{
-  if(e.key==="ArrowRight") nextSlide();
-  if(e.key==="ArrowLeft") prevSlide();
-});
-
-/* Add clickable arrows */
-slides.forEach((slide,i)=>{
-  if(i>0){
-    const left=document.createElement("div");
-    left.innerHTML="❮";
-    left.className="arrow left";
-    left.onclick=prevSlide;
-    slide.appendChild(left);
-  }
-  if(i<slides.length-1){
-    const right=document.createElement("div");
-    right.innerHTML="❯";
-    right.className="arrow right";
-    right.onclick=nextSlide;
-    slide.appendChild(right);
-  }
-});
-
-/* Floating emojis for recap slides */
-const emojis = ["🌹","💍","🍫","🧸","🤍","🤗","💋"];
-
-slides.forEach((slide,i)=>{
-  if(i>=1 && i<=7){
-    for(let j=0;j<12;j++){
-      let e=document.createElement("div");
-      e.className="emoji";
-      e.innerText=emojis[i-1];
-      e.style.left=Math.random()*100+"%";
-      e.style.animationDuration=(6+Math.random()*4)+"s";
-      slide.appendChild(e);
-    }
-  }
-});
-
-/* Video fade music */
 video.addEventListener("play",()=>{
   let fade=setInterval(()=>{
     if(music.volume>0.05){
@@ -397,22 +403,17 @@ video.addEventListener("play",()=>{
   },200);
 });
 
-/* Envelope animation */
-const flap=document.getElementById("flap");
-const letter=document.getElementById("letter");
-
 flap.addEventListener("click",()=>{
   flap.style.transform="rotateX(180deg)";
   setTimeout(()=>{
     letter.style.display="block";
     typeLetter();
-  },800);
+  },1000);
 });
 
 function typeLetter(){
   const text="i love you always and forever, mannu ❤️\nHappy Valentine’s love ❤️";
   let i=0;
-  let speed=60;
   letter.innerHTML="";
   let typing=setInterval(()=>{
     if(i<text.length){
@@ -421,9 +422,19 @@ function typeLetter(){
     }else{
       clearInterval(typing);
     }
-  },speed);
+  },70);
 }
 
+/* particles */
+document.querySelectorAll(".recap").forEach(section=>{
+  for(let i=0;i<20;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=(6+Math.random()*6)+"s";
+    section.appendChild(p);
+  }
+});
 </script>
 
 </body>
