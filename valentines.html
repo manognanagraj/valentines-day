@@ -16,8 +16,6 @@ body {
   font-family:'Pacifico',cursive;
 }
 
-/* ===== GLOBAL SLIDER ===== */
-
 .slider {
   display:flex;
   width:100vw;
@@ -34,15 +32,37 @@ body {
   flex-direction:column;
   text-align:center;
   position:relative;
-  padding:30px;
+  padding:40px;
   box-sizing:border-box;
+}
+
+.recap h2 {
+  font-size:3rem;
+  margin-bottom:20px;
+}
+
+.recap p {
+  font-size:1.6rem;
+  max-width:600px;
+}
+
+.emoji {
+  position:absolute;
+  font-size:2rem;
+  animation:float 8s linear infinite;
+  opacity:0.5;
+}
+
+@keyframes float {
+  from { transform:translateY(100vh); }
+  to { transform:translateY(-100vh); }
 }
 
 .arrow {
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  font-size:2rem;
+  font-size:2.5rem;
   cursor:pointer;
   opacity:0.7;
   z-index:10;
@@ -51,59 +71,17 @@ body {
 .left { left:20px; }
 .right { right:20px; }
 
-button {
-  padding:12px 25px;
-  border-radius:30px;
-  border:none;
-  margin:10px;
-  cursor:pointer;
-  font-size:1rem;
+.poem {
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;
+  line-height:1.8;
+  max-height:70vh;
+  overflow-y:auto;
+  padding:20px;
 }
-
-/* ===== INTRO ===== */
-
-.intro {
-  background:black;
-}
-
-.intro h1 {
-  font-size:2rem;
-  animation:fadeIn 2s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity:0; }
-  to { opacity:1; }
-}
-
-/* ===== RECAP SLIDES ===== */
-
-.recap h2 {
-  font-size:2.2rem;
-  margin-bottom:15px;
-}
-
-.recap p {
-  font-size:1.1rem;
-  max-width:400px;
-}
-
-.emoji {
-  position:absolute;
-  font-size:1.5rem;
-  animation:float 6s linear infinite;
-  opacity:0.4;
-}
-
-@keyframes float {
-  from { transform:translateY(100vh); }
-  to { transform:translateY(-100vh); }
-}
-
-/* ===== HEART ===== */
 
 .heart {
-  font-size:4rem;
+  font-size:5rem;
   cursor:pointer;
   animation:beat 1.5s infinite;
 }
@@ -113,68 +91,10 @@ button {
   50% { transform:scale(1.2); }
 }
 
-/* ===== VIDEO ===== */
-
-video {
-  max-width:90%;
-  border-radius:20px;
-}
-
-/* ===== POEM ===== */
-
-.poem {
-  font-family:'Playfair Display',serif;
-  font-size:1rem;
-  line-height:1.7;
-  max-height:70vh;
-  overflow-y:auto;
-  padding:20px;
-}
-
-/* ===== ENVELOPE ===== */
-
-.envelope {
-  width:240px;
-  height:150px;
-  background:white;
-  position:relative;
-  border-radius:12px;
-}
-
-.flap {
-  width:0;
-  height:0;
-  border-left:120px solid transparent;
-  border-right:120px solid transparent;
-  border-bottom:75px solid #ff4d6d;
-  position:absolute;
-  top:0;
-  left:0;
-  transform-origin:top;
-  transition:transform 0.8s ease;
-}
-
 .letter {
-  position:absolute;
-  width:200px;
-  height:120px;
-  background:#fffafc;
-  top:40px;
-  left:20px;
-  padding:15px;
-  font-family:'Playfair Display',serif;
-  font-size:0.95rem;
-  display:none;
-  color:#ff4d6d;
+  font-size:1.2rem;
 }
 
-.subtle {
-  font-size:0.8rem;
-  opacity:0.6;
-  position:absolute;
-  bottom:10px;
-  right:10px;
-}
 </style>
 </head>
 
@@ -391,11 +311,12 @@ My heart ever learned to orbit.
 </div>
 
 <script>
-let index=0;
-const slider=document.getElementById("slider");
-const music=document.getElementById("music");
-const video=document.getElementById("video");
-const noBtn=document.getElementById("noBtn");
+let index = 0;
+const slider = document.getElementById("slider");
+const music = document.getElementById("music");
+const video = document.getElementById("video");
+const noBtn = document.getElementById("noBtn");
+const slides = document.querySelectorAll(".slide");
 
 noBtn.addEventListener("mouseover",()=>{
   noBtn.style.position="absolute";
@@ -406,18 +327,65 @@ noBtn.addEventListener("mouseover",()=>{
 function start(){
   music.volume=0.4;
   music.play();
-  nextSlide();
+  moveTo(1);
+}
+
+function moveTo(i){
+  if(i>=0 && i<slides.length){
+    index=i;
+    slider.style.transform=`translateX(-${index*100}vw)`;
+  }
 }
 
 function nextSlide(){
-  index++;
-  slider.style.transform=`translateX(-${index*100}vw)`;
+  moveTo(index+1);
 }
 
-function showVideo(){
-  nextSlide();
+function prevSlide(){
+  moveTo(index-1);
 }
 
+/* Keyboard arrows */
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight") nextSlide();
+  if(e.key==="ArrowLeft") prevSlide();
+});
+
+/* Add clickable arrows */
+slides.forEach((slide,i)=>{
+  if(i>0){
+    const left=document.createElement("div");
+    left.innerHTML="❮";
+    left.className="arrow left";
+    left.onclick=prevSlide;
+    slide.appendChild(left);
+  }
+  if(i<slides.length-1){
+    const right=document.createElement("div");
+    right.innerHTML="❯";
+    right.className="arrow right";
+    right.onclick=nextSlide;
+    slide.appendChild(right);
+  }
+});
+
+/* Floating emojis for recap slides */
+const emojis = ["🌹","💍","🍫","🧸","🤍","🤗","💋"];
+
+slides.forEach((slide,i)=>{
+  if(i>=1 && i<=7){
+    for(let j=0;j<12;j++){
+      let e=document.createElement("div");
+      e.className="emoji";
+      e.innerText=emojis[i-1];
+      e.style.left=Math.random()*100+"%";
+      e.style.animationDuration=(6+Math.random()*4)+"s";
+      slide.appendChild(e);
+    }
+  }
+});
+
+/* Video fade music */
 video.addEventListener("play",()=>{
   let fade=setInterval(()=>{
     if(music.volume>0.05){
@@ -429,7 +397,7 @@ video.addEventListener("play",()=>{
   },200);
 });
 
-/* Envelope */
+/* Envelope animation */
 const flap=document.getElementById("flap");
 const letter=document.getElementById("letter");
 
@@ -444,7 +412,8 @@ flap.addEventListener("click",()=>{
 function typeLetter(){
   const text="i love you always and forever, mannu ❤️\nHappy Valentine’s love ❤️";
   let i=0;
-  let speed=50;
+  let speed=60;
+  letter.innerHTML="";
   let typing=setInterval(()=>{
     if(i<text.length){
       letter.innerHTML+=text.charAt(i);
@@ -454,6 +423,7 @@ function typeLetter(){
     }
   },speed);
 }
+
 </script>
 
 </body>
