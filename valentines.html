@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine’s Big Surprise ❤️</title>
+<title>Valentine 2026 ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display&display=swap" rel="stylesheet">
 
@@ -11,168 +11,264 @@
 body {
   margin:0;
   overflow:hidden;
-  font-family:'Pacifico',cursive;
-  background:linear-gradient(135deg,#ff6f91,#ff9a9e);
+  background:black;
   color:white;
+  font-family:'Pacifico',cursive;
 }
 
-.screen {
-  width:100vw;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:20px;
-}
-
-button {
-  padding:12px 25px;
-  border:none;
-  border-radius:30px;
-  margin:10px;
-  font-size:1rem;
-  cursor:pointer;
-  background:white;
-  color:#ff4d6d;
-}
-
-.no {
-  position:absolute;
-}
+/* ===== GLOBAL SLIDER ===== */
 
 .slider {
-  height:100vh;
+  display:flex;
   width:100vw;
-  overflow-y:scroll;
-  scroll-snap-type:y mandatory;
+  height:100vh;
+  transition:transform 0.8s ease;
 }
 
 .slide {
+  min-width:100vw;
   height:100vh;
-  width:100vw;
-  scroll-snap-align:start;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
+  text-align:center;
   position:relative;
-}
-
-iframe {
-  width:100%;
-  height:100%;
-  border:none;
-}
-
-.message-box {
-  max-width:600px;
-  font-size:1.1rem;
-  line-height:1.6;
   padding:30px;
+  box-sizing:border-box;
 }
+
+.arrow {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:2rem;
+  cursor:pointer;
+  opacity:0.7;
+  z-index:10;
+}
+
+.left { left:20px; }
+.right { right:20px; }
+
+button {
+  padding:12px 25px;
+  border-radius:30px;
+  border:none;
+  margin:10px;
+  cursor:pointer;
+  font-size:1rem;
+}
+
+/* ===== INTRO ===== */
+
+.intro {
+  background:black;
+}
+
+.intro h1 {
+  font-size:2rem;
+  animation:fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+/* ===== RECAP SLIDES ===== */
+
+.recap h2 {
+  font-size:2.2rem;
+  margin-bottom:15px;
+}
+
+.recap p {
+  font-size:1.1rem;
+  max-width:400px;
+}
+
+.emoji {
+  position:absolute;
+  font-size:1.5rem;
+  animation:float 6s linear infinite;
+  opacity:0.4;
+}
+
+@keyframes float {
+  from { transform:translateY(100vh); }
+  to { transform:translateY(-100vh); }
+}
+
+/* ===== HEART ===== */
+
+.heart {
+  font-size:4rem;
+  cursor:pointer;
+  animation:beat 1.5s infinite;
+}
+
+@keyframes beat {
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.2); }
+}
+
+/* ===== VIDEO ===== */
 
 video {
   max-width:90%;
   border-radius:20px;
 }
 
+/* ===== POEM ===== */
+
 .poem {
   font-family:'Playfair Display',serif;
-  font-size:1.05rem;
+  font-size:1rem;
   line-height:1.7;
-  overflow-y:auto;
   max-height:70vh;
+  overflow-y:auto;
   padding:20px;
 }
 
+/* ===== ENVELOPE ===== */
+
 .envelope {
-  width:220px;
-  height:130px;
-  background:#fff;
+  width:240px;
+  height:150px;
+  background:white;
   position:relative;
   border-radius:12px;
-  cursor:pointer;
 }
 
-.envelope:before {
-  content:"";
+.flap {
+  width:0;
+  height:0;
+  border-left:120px solid transparent;
+  border-right:120px solid transparent;
+  border-bottom:75px solid #ff4d6d;
   position:absolute;
   top:0;
   left:0;
-  width:0;
-  height:0;
-  border-left:110px solid transparent;
-  border-right:110px solid transparent;
-  border-bottom:65px solid #ff4d6d;
+  transform-origin:top;
+  transition:transform 0.8s ease;
 }
 
-.note {
-  display:none;
-  margin-top:20px;
+.letter {
+  position:absolute;
+  width:200px;
+  height:120px;
+  background:#fffafc;
+  top:40px;
+  left:20px;
+  padding:15px;
   font-family:'Playfair Display',serif;
+  font-size:0.95rem;
+  display:none;
+  color:#ff4d6d;
+}
+
+.subtle {
+  font-size:0.8rem;
+  opacity:0.6;
+  position:absolute;
+  bottom:10px;
+  right:10px;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" loop>
+<audio id="music" loop>
   <source src="perfect.mp3" type="audio/mp3">
 </audio>
 
-<!-- ENTRY -->
-<div class="screen" id="entry">
-  <h1>Are you ready for the BIG surprise? 😏❤️</h1>
-  <button onclick="start()">YES 💖</button>
-  <button class="no" id="noBtn">NO 🙈</button>
-</div>
+<div class="slider" id="slider">
 
-<!-- SLIDER -->
-<div class="slider" id="slider" style="display:none;">
+  <!-- INTRO -->
+  <div class="slide intro">
+    <h1>wanna recap 2026 valentine’s? ✨</h1>
+    <button onclick="start()">YES 💖</button>
+    <button id="noBtn">NO 🙈</button>
+  </div>
 
-  <div class="slide"><iframe src="rose.html"></iframe></div>
-  <div class="slide"><iframe src="propose.html"></iframe></div>
-  <div class="slide"><iframe src="chocolate.html"></iframe></div>
-  <div class="slide"><iframe src="teddy.html"></iframe></div>
-  <div class="slide"><iframe src="hug.html"></iframe></div>
-  <div class="slide"><iframe src="kiss.html"></iframe></div>
+  <!-- ROSE -->
+  <div class="slide recap" style="background:#ffafbd;">
+    <h2>Rose Day 🌹</h2>
+    <p>Among every flower, my eyes still chose you.</p>
+  </div>
 
-  <!-- Emotional message -->
-  <div class="slide">
-    <div class="message-box">
-      Baby, it’s been really really long…<br><br>
-      I’m done loving you through screens.<br>
-      I just want your arms, your warmth,<br>
-      endless talks and stupid laughs.<br><br>
-      Pretending the whole world belongs to us.
-      <br><br>
-      So baby… do you wanna see something right now? 😌
-      <br><br>
-      <button onclick="goToVideo()">YES 😏</button>
-      <button class="no" id="noBtn2">NO 🙈</button>
-    </div>
+  <!-- PROPOSE -->
+  <div class="slide recap" style="background:#e0c3fc;">
+    <h2>Propose Day 💍</h2>
+    <p>From strangers to forever in just one kiss.</p>
+  </div>
+
+  <!-- CHOCOLATE -->
+  <div class="slide recap" style="background:#f6d365;">
+    <h2>Chocolate Day 🍫</h2>
+    <p>Sweet days taste better when they’re shared with you.</p>
+  </div>
+
+  <!-- TEDDY -->
+  <div class="slide recap" style="background:#fbc2eb;">
+    <h2>Teddy Day 🧸</h2>
+    <p>My comfort, my warmth, my favorite safe place.</p>
+  </div>
+
+  <!-- PROMISE -->
+  <div class="slide recap" style="background:#cfd9df;">
+    <h2>Promise Day 🤍</h2>
+    <p>I choose you every day, without hesitation.</p>
+  </div>
+
+  <!-- HUG -->
+  <div class="slide recap" style="background:#ffd1ff;">
+    <h2>Hug Day 🤗</h2>
+    <p>Your arms are where my world finally feels still.</p>
+  </div>
+
+  <!-- KISS -->
+  <div class="slide recap" style="background:#ff9a9e;">
+    <h2>Kiss Day 😘</h2>
+    <p>Every kiss with you still feels like the first.</p>
+  </div>
+
+  <!-- EMOTIONAL -->
+  <div class="slide" style="background:black;">
+    <h2>baby…</h2>
+    <p style="max-width:500px;">
+    it’s been really, really long.<br>
+    i’m done loving you through screens.<br>
+    so… are you ready for the big surprise? 💫
+    </p>
+    <button onclick="nextSlide()">YES 💖</button>
+  </div>
+
+  <!-- HEART -->
+  <div class="slide" style="background:black;">
+    <div class="heart" onclick="showVideo()">❤️</div>
+    <p>tap the heart 💖</p>
   </div>
 
   <!-- VIDEO -->
-  <div class="slide" id="videoSlide">
-    <h2>Tap to play 🤍</h2>
-    <video id="valVideo" controls>
+  <div class="slide" style="background:black;">
+    <video id="video" controls>
       <source src="valentine.mp4" type="video/mp4">
     </video>
   </div>
 
   <!-- POEM -->
-  <div class="slide">
+  <div class="slide" style="background:#111;">
     <div class="poem">
-      <p style="font-weight:bold; font-size:1.3rem; margin-bottom:20px;">
-The Only Star in My Universe </p>
+      <!-- Paste your full formatted poem here -->
+      <p style="font-weight:bold; font-size:1.3rem; margin-bottom:20px;">The Only Star in My Universe</p>
 <p>
 June eighth, two thousand twenty-three,<br>
 A train moved north, and so did fate.<br>
 Steel tracks hummed beneath our feet,<br>
-Unknowing hearts arrived too late,<br>
+Unknowing hearts arrived too late<br>
 To pretend this was just chance.<br><br>
 
 We wore the same uniform,<br>
@@ -278,41 +374,49 @@ My once-in-a-lifetime.<br><br>
 And in a universe filled with stars,<br>
 You are the only one<br>
 My heart ever learned to orbit.
-  </p>
+</p>
     </div>
-    <button onclick="scrollNext()">Next 💌</button>
+    <button onclick="nextSlide()">Next 💌</button>
   </div>
 
   <!-- ENVELOPE -->
-  <div class="slide">
-    <div class="envelope" onclick="openEnvelope()"></div>
-    <div class="note" id="finalNote">
-      <p>I love you always and forever mannu 🤍</p>
-      <p>Happy Valentine’s love ❤️</p>
-      <p style="opacity:0.6;font-size:0.9rem;text-align:right;">
-      call me as soon as you watch this
-      </p>
+  <div class="slide" style="background:#1a001f;">
+    <div class="envelope">
+      <div class="flap" id="flap"></div>
+      <div class="letter" id="letter"></div>
     </div>
+    <div class="subtle">call me as soon as you watch this</div>
   </div>
 
 </div>
 
 <script>
-const music=document.getElementById("bgMusic");
+let index=0;
+const slider=document.getElementById("slider");
+const music=document.getElementById("music");
+const video=document.getElementById("video");
 const noBtn=document.getElementById("noBtn");
 
 noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.position="absolute";
   noBtn.style.top=Math.random()*80+"%";
   noBtn.style.left=Math.random()*80+"%";
 });
 
 function start(){
+  music.volume=0.4;
   music.play();
-  document.getElementById("entry").style.display="none";
-  document.getElementById("slider").style.display="block";
+  nextSlide();
 }
 
-const video=document.getElementById("valVideo");
+function nextSlide(){
+  index++;
+  slider.style.transform=`translateX(-${index*100}vw)`;
+}
+
+function showVideo(){
+  nextSlide();
+}
 
 video.addEventListener("play",()=>{
   let fade=setInterval(()=>{
@@ -325,16 +429,30 @@ video.addEventListener("play",()=>{
   },200);
 });
 
-function scrollNext(){
-  document.getElementById("slider").scrollBy({top:window.innerHeight,behavior:'smooth'});
-}
+/* Envelope */
+const flap=document.getElementById("flap");
+const letter=document.getElementById("letter");
 
-function goToVideo(){
-  document.getElementById("slider").scrollBy({top:window.innerHeight,behavior:'smooth'});
-}
+flap.addEventListener("click",()=>{
+  flap.style.transform="rotateX(180deg)";
+  setTimeout(()=>{
+    letter.style.display="block";
+    typeLetter();
+  },800);
+});
 
-function openEnvelope(){
-  document.getElementById("finalNote").style.display="block";
+function typeLetter(){
+  const text="i love you always and forever, mannu ❤️\nHappy Valentine’s love ❤️";
+  let i=0;
+  let speed=50;
+  let typing=setInterval(()=>{
+    if(i<text.length){
+      letter.innerHTML+=text.charAt(i);
+      i++;
+    }else{
+      clearInterval(typing);
+    }
+  },speed);
 }
 </script>
 
