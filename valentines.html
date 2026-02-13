@@ -364,16 +364,7 @@ this.style.top=Math.random()*80+'%';
 document.querySelectorAll('.fade').forEach(el=>{
 observer.observe(el);
 });
-/* Floating romantic elements */
-setInterval(()=>{
-  const icons=['🌹','💋','❤️','🧸'];
-  const e=document.createElement('div');
-  e.className='float';
-  e.innerText=icons[Math.floor(Math.random()*icons.length)];
-  e.style.left=Math.random()*100+'vw';
-  document.body.appendChild(e);
-  setTimeout(()=>e.remove(),18000);
-},1200);
+
    const music = document.getElementById("bgMusic");
 const video = document.querySelector("video");
 
@@ -391,7 +382,16 @@ if(video){
       }
   });
 }
- 
+ /* Floating romantic elements */
+setInterval(()=>{
+  const icons=['🌹','💋','❤️','🧸'];
+  const e=document.createElement('div');
+  e.className='float';
+  e.innerText=icons[Math.floor(Math.random()*icons.length)];
+  e.style.left=Math.random()*100+'vw';
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),18000);
+},1200);
     
 </script>
 </body>
