@@ -122,6 +122,15 @@ video{
     transform-origin:top;
     transition:transform 1.2s cubic-bezier(.68,-0.6,.32,1.6);
 }
+    .heart-seal{
+    position:absolute;
+    top:75px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:1.8rem;
+    z-index:5;
+    cursor:pointer;
+}
 
 .letter{
     position:absolute;
@@ -133,10 +142,11 @@ video{
     color:#4a0020;
     padding:20px;
     border-radius:12px;
-    transform:translateY(70px);
-    transition:transform 1.2s ease;
+    transform:translateY(90px);
+    transition:transform 1.3s cubic-bezier(.22,1,.36,1);
     font-size:1.2rem;
     box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    overflow:hidden;
 }
 
 .envelope.open .flap{
@@ -292,13 +302,16 @@ My heart ever learned to orbit.
 <section class="fade">
 <h2>One Last Thing… ❤️</h2>
 <div class="envelope" onclick="openEnvelope(this)">
-<div class="flap"></div>
-<div class="letter">
-I love you always and forever mannu ❤️<br><br>
-Happy Valentine’s, love 💌
-<div class="subtle">Call me as soon as you see this.</div>
+  <div class="flap"></div>
+  <div class="heart-seal">❤️</div>
+  <div class="letter">
+    <div id="typedText"></div>
+    <div class="subtle" id="callNote" style="display:none;">
+      Call me as soon as you see this.
+    </div>
+  </div>
 </div>
-</div>
+
 </section>
 
 <script>
@@ -318,18 +331,35 @@ this.style.left=Math.random()*80+'%';
 this.style.top=Math.random()*80+'%';
 });
 
-function openEnvelope(el){
-el.classList.toggle('open');
+    function openEnvelope(el){
+
+  if(el.classList.contains("open")) return;
+
+  el.classList.add("open");
+
+  const letter = el.querySelector(".letter");
+  const typedText = document.getElementById("typedText");
+  const callNote = document.getElementById("callNote");
+
+  const message = "I love you always and forever, Mannu ❤️\n\nHappy Valentine’s, love 💌";
+
+  let i = 0;
+  typedText.innerHTML = "";
+
+  setTimeout(function(){
+      const typing = setInterval(function(){
+          if(i < message.length){
+              typedText.innerHTML += message.charAt(i);
+              i++;
+          } else {
+              clearInterval(typing);
+              callNote.style.display = "block";
+          }
+      }, 50);
+  }, 1000);
 }
 
-/* Scroll fade */
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add('visible');
-}
-});
-},{threshold:0.2});
+
 
 document.querySelectorAll('.fade').forEach(el=>{
 observer.observe(el);
@@ -344,6 +374,24 @@ setInterval(()=>{
   document.body.appendChild(e);
   setTimeout(()=>e.remove(),18000);
 },1200);
+   const music = document.getElementById("bgMusic");
+const video = document.querySelector("video");
+
+if(video){
+  video.addEventListener("play", function(){
+      if(music){
+          let fadeOut = setInterval(function(){
+              if(music.volume > 0.05){
+                  music.volume -= 0.05;
+              } else {
+                  music.pause();
+                  clearInterval(fadeOut);
+              }
+          }, 200);
+      }
+  });
+}
+ 
     
 </script>
 </body>
