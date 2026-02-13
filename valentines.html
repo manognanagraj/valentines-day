@@ -12,110 +12,104 @@
 
 body{
     font-family:'Cormorant Garamond',serif;
-    background:radial-gradient(circle at 50% 30%, #5c0f2c, #1a0010 70%);
+    background:radial-gradient(circle at 50% 30%, #6a0f33 0%, #240013 65%, #120008 100%);
     color:#f5e6ec;
     overflow-x:hidden;
 }
 
+/* Sections */
 section{
     min-height:100vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    padding:80px 20px;
+    padding:100px 25px;
     text-align:center;
     position:relative;
 }
 
-h1{
-    font-size:3rem;
+/* Soft glow behind headings */
+h1, h2{
+    position:relative;
     font-weight:700;
-    margin-bottom:20px;
+    margin-bottom:25px;
     letter-spacing:1px;
+    text-shadow:0 0 25px rgba(255,192,203,0.35);
+}
+
+h1{
+    font-size:3.2rem;
 }
 
 h2{
-    font-size:2.3rem;
-    margin-bottom:15px;
+    font-size:2.5rem;
 }
 
-p{
-    font-size:1.4rem;
-    line-height:1.8;
-    max-width:850px;
+/* Glassmorphism content box */
+section.fade{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,215,180,0.15);
+    border-radius:30px;
+    margin:40px 20px;
+    padding:80px 30px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
 }
 
+/* Recap lines more lively + italic */
+section.fade p{
+    font-style:italic;
+    font-size:1.6rem;
+    color:#ffd6e8;
+    letter-spacing:0.5px;
+}
+
+/* Gold accent buttons */
 button{
-    padding:14px 32px;
-    border:none;
+    padding:14px 34px;
     border-radius:40px;
     font-size:1.2rem;
     cursor:pointer;
     margin:10px;
     transition:all .3s ease;
     font-family:'Cormorant Garamond',serif;
+    border:1px solid #d4af37;
 }
 
 .yes{
-    background:#a0124f;
-    color:#fff;
+    background:linear-gradient(145deg,#d4af37,#b8902e);
+    color:#1a0010;
 }
 
 .no{
     background:#f5e6ec;
-    color:#a0124f;
-    position:relative;
+    color:#6a0f33;
 }
 
 button:hover{
-    transform:scale(1.08);
-}
-
-/* Floating elegant emojis */
-.float{
-    position:absolute;
-    font-size:1.5rem;
-    opacity:.25;
-    animation:float 12s linear infinite;
-    pointer-events:none;
-}
-
-@keyframes float{
-    0%{transform:translateY(0) rotate(0deg)}
-    100%{transform:translateY(-120vh) rotate(360deg)}
-}
-
-/* Fade-in scroll animation */
-.fade{
-    opacity:0;
-    transform:translateY(40px);
-    transition:all 1.2s ease;
-}
-
-.fade.visible{
-    opacity:1;
-    transform:translateY(0);
+    transform:scale(1.1);
+    box-shadow:0 0 20px rgba(212,175,55,0.6);
 }
 
 /* Video */
 video{
     width:80%;
-    max-width:800px;
+    max-width:850px;
     border-radius:20px;
-    box-shadow:0 0 40px rgba(255,192,203,0.3);
+    box-shadow:0 0 60px rgba(255,192,203,0.3);
 }
 
-/* Envelope */
+/* Softer Envelope */
 .envelope{
-    width:260px;
-    height:180px;
-    background:#7b113a;
+    width:280px;
+    height:190px;
+    background:linear-gradient(145deg,#7b113a,#4b0024);
     position:relative;
-    margin-top:30px;
-    border-radius:10px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    border-radius:15px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
     cursor:pointer;
+    transition:transform .6s ease;
 }
 
 .flap{
@@ -126,37 +120,47 @@ video{
     background:#a0124f;
     clip-path:polygon(0 0,100% 0,50% 60%);
     transform-origin:top;
-    transition:transform 1s ease;
+    transition:transform 1.2s cubic-bezier(.68,-0.6,.32,1.6);
 }
 
 .letter{
     position:absolute;
     top:20px;
     left:15px;
-    width:230px;
-    height:150px;
-    background:#fdf3f6;
+    width:250px;
+    height:160px;
+    background:#fff5f8;
     color:#4a0020;
-    padding:15px;
-    border-radius:10px;
-    transform:translateY(60px);
-    transition:transform 1s ease;
-    font-size:1.1rem;
+    padding:20px;
+    border-radius:12px;
+    transform:translateY(70px);
+    transition:transform 1.2s ease;
+    font-size:1.2rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
 .envelope.open .flap{
-    transform:rotateX(180deg);
+    transform:rotateX(160deg);
 }
 
 .envelope.open .letter{
-    transform:translateY(-80px);
+    transform:translateY(-90px);
 }
 
-.subtle{
-    font-size:0.9rem;
-    opacity:0.7;
-    margin-top:10px;
+/* Floating icons */
+.float{
+    position:absolute;
+    font-size:1.6rem;
+    opacity:.3;
+    animation:float 15s linear infinite;
+    pointer-events:none;
 }
+
+@keyframes float{
+    0%{transform:translateY(0) rotate(0deg)}
+    100%{transform:translateY(-120vh) rotate(360deg)}
+}
+
 </style>
 </head>
 
@@ -322,14 +326,16 @@ observer.observe(el);
 
 /* Floating emojis */
 setInterval(()=>{
-const e=document.createElement('div');
-e.className='float';
-e.innerText=['🌹','💋','❤️'][Math.floor(Math.random()*3)];
-e.style.left=Math.random()*100+'vw';
-e.style.bottom='-20px';
-document.body.appendChild(e);
-setTimeout(()=>e.remove(),12000);
-},600);
+  const icons=['🌹','💋','❤️','🧸'];
+  const e=document.createElement('div');
+  e.className='float';
+  e.innerText=icons[Math.floor(Math.random()*icons.length)];
+  e.style.left=Math.random()*100+'vw';
+  e.style.bottom='-30px';
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),15000);
+},800);
+
 </script>
 
 </body>
